@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="./index.js"></script>
+    <script src="./index.ts"></script>
   </head>
   <body>
     <h1>Piper</h1>
@@ -15,15 +15,5 @@
       <input type="time" />
       <button type="submit">Snipe</button>
     </form>
-    <script>
-      const test = (e) => {
-        e.preventDefault();
-        chrome.browserAction.setBadgeText({
-          text: "ON",
-        });
-      };
-
-      document.getElementById("testForm").addEventListener("submit", test);
-    </script>
   </body>
 </html>

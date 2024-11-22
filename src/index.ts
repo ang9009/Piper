@@ -20,7 +20,7 @@ const navigateToPlansTab = () => {
   plansTab.click();
 };
 
-const getDesiredPlan = (targetPlan) => {
+const getDesiredPlan = (targetPlan: string): HTMLElement => {
   const plans = document.getElementsByClassName("plan-title");
   if (plans.length === 0) {
     throw new Error("Could not find any plans in plans tab");
@@ -34,7 +34,7 @@ const getDesiredPlan = (targetPlan) => {
     const loweredPlanName = plan.ariaLabel.toLowerCase();
     return loweredPlanName.includes(loweredTargetPlan);
   });
-  if (!desiredPlan) {
+  if (!desiredPlan || !(desiredPlan instanceof HTMLElement)) {
     throw new Error("Could not find desired plan");
   }
   return desiredPlan;
@@ -62,12 +62,11 @@ const waitForPlansToLoad = (): Promise<void> => {
   });
 };
 
-const addAllFromDesiredPlan = (desiredPlanAccordion) => {
-  let planAddAllBtn = desiredPlanAccordion.querySelectorAll(".right > button");
-  if (planAddAllBtn.length === 0) {
+const addAllFromDesiredPlan = (desiredPlanAccordion: HTMLElement) => {
+  let planAddAllBtn = desiredPlanAccordion.querySelector(".right > button");
+  if (planAddAllBtn === undefined || !(planAddAllBtn instanceof HTMLElement)) {
     throw new Error('Targeted plan has no "add all" button');
   }
-  planAddAllBtn = planAddAllBtn[0];
   planAddAllBtn.click();
 };
 
@@ -93,7 +92,7 @@ const waitForCoursesToAdd = () => {
   });
 };
 
-const snipe = async (targetPlan) => {
+const snipe = async (targetPlan: string) => {
   // const continueBtn = document.getElementById("term-go");
   // continueBtn.click();
 
