@@ -12,6 +12,7 @@ const removeNotifs = () => {
   }
 };
 
+// Navigates to the plans tab
 const navigateToPlansTab = () => {
   const plansTab = document.getElementById("loadPlans-tab");
   if (!plansTab) {
