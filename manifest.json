@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Piper",
+  "description": "Simple sniper extension for NEU class registration",
+  "version": "1.0",
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "icon.png"
+  }
+}
