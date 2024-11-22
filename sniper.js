@@ -11,7 +11,6 @@ const removeNotifs = () => {
 };
 
 const navigateToPlansTab = () => {
-  // Go to plans tab
   const plansTab = document.getElementById("loadPlans-tab");
   if (!plansTab) {
     throw new Error("Plans tab could not be found");
@@ -67,6 +66,29 @@ const addAllFromDesiredPlan = (desiredPlanAccordion) => {
   planAddAllBtn.click();
 };
 
+const waitForCoursesToAdd = () => {
+  return new Promise((resolve, reject) => {
+    const config = {
+      attributes: true,
+    };
+    const summaryBody = document.querySelector("#summaryBody tbody");
+    if (!summaryBody) {
+      reject(new Error("Could not find course summary section"));
+    }
+
+    const observer = new MutationObserver((mutations, observerInstance) => {
+      for (const mutation of mutations) {
+        if (mutation.type === "attributes") {
+          resolve();
+          observer.disconnect();
+          return;
+        }
+      }
+    });
+    observer.observe(summaryBody, config);
+  });
+};
+
 const snipe = async (targetPlan) => {
   // const continueBtn = document.getElementById("term-go");
   // continueBtn.click();
@@ -79,9 +101,7 @@ const snipe = async (targetPlan) => {
     const desiredPlanAccordion = getDesiredPlan(targetPlan);
     addAllFromDesiredPlan(desiredPlanAccordion);
 
-    // ! Wait for cursor to finish loading all
-
-    // Submit
+    await waitForCoursesToAdd();
     const submitBtn = document.getElementById("saveButton");
     submitBtn.click();
   });
