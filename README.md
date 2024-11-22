@@ -7,7 +7,8 @@ day.
 ## Usage
 
 - Install the extension and pin it
-- Fill in your registration time, term, and plan name
+- Fill in your registration time, term, and plan name. Make sure these match,
+  otherwise Piper won't work properly
 - Submit, and have the course selection page on Banner open (preferably before
   registration time for best results). Piper will remind you 5 minutes before
   the deadline + open the page for you if you still don't have it open by then,
