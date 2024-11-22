@@ -8,17 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const removeNotifs = () => {
-    // Get rid of notifications
-    const notifOkBtns = document.getElementsByClassName("notification-flyout-item primary");
-    if (notifOkBtns.length !== 0) {
-        for (const btn of notifOkBtns) {
-            if (btn instanceof HTMLElement) {
-                btn.click();
-            }
-        }
-    }
-};
+Object.defineProperty(exports, "__esModule", { value: true });
+const removeNotifs_1 = require("./removeNotifs");
+console.log("Register script loaded");
+const registrationPageUrl = "https://nubanner.neu.edu/StudentRegistrationSsb/ssb/classRegistration/classRegistration";
+if (window.location.href !== registrationPageUrl) {
+    throw new Error("This is not the registration page.");
+}
 // Navigates to the plans tab
 const navigateToPlansTab = () => {
     const plansTab = document.getElementById("loadPlans-tab");
@@ -93,20 +89,18 @@ const waitForCoursesToAdd = () => {
         observer.observe(summaryBody, config);
     });
 };
-const snipe = (targetPlan) => __awaiter(void 0, void 0, void 0, function* () {
-    // const continueBtn = document.getElementById("term-go");
-    // continueBtn.click();
-    window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {
-        removeNotifs();
-        navigateToPlansTab();
-        yield waitForPlansToLoad();
-        const desiredPlanAccordion = getDesiredPlan(targetPlan);
-        addAllFromDesiredPlan(desiredPlanAccordion);
-        yield waitForCoursesToAdd();
-        const submitBtn = document.getElementById("saveButton");
-        if (!submitBtn) {
-            throw Error("Could not find submit button");
-        }
-        submitBtn.click();
-    }));
+const selectPlanAndSubmit = (targetPlan) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("Triggered");
+    (0, removeNotifs_1.removeNotifs)();
+    navigateToPlansTab();
+    yield waitForPlansToLoad();
+    const desiredPlanAccordion = getDesiredPlan(targetPlan);
+    addAllFromDesiredPlan(desiredPlanAccordion);
+    yield waitForCoursesToAdd();
+    const submitBtn = document.getElementById("saveButton");
+    if (!submitBtn) {
+        throw Error("Could not find submit button");
+    }
+    submitBtn.click();
 });
+selectPlanAndSubmit("asdf");

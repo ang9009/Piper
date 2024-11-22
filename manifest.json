@@ -6,5 +6,14 @@
   "action": {
     "default_popup": "./src/index.html",
     "default_icon": "icon.png"
-  }
+  },
+  "content_scripts": [
+    {
+      "js": ["./dist/register.js", "./dist/select-term.js"],
+      "matches": [
+        "https://nubanner.neu.edu/StudentRegistrationSsb/ssb/term/termSelection?mode=registration",
+        "https://nubanner.neu.edu/StudentRegistrationSsb/ssb/classRegistration/classRegistration"
+      ]
+    }
+  ]
 }

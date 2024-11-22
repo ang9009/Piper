@@ -1,16 +1,12 @@
-const removeNotifs = () => {
-  // Get rid of notifications
-  const notifOkBtns = document.getElementsByClassName(
-    "notification-flyout-item primary"
-  );
-  if (notifOkBtns.length !== 0) {
-    for (const btn of notifOkBtns) {
-      if (btn instanceof HTMLElement) {
-        btn.click();
-      }
-    }
-  }
-};
+import { removeNotifs } from "./removeNotifs";
+
+console.log("Register script loaded");
+
+const registrationPageUrl =
+  "https://nubanner.neu.edu/StudentRegistrationSsb/ssb/classRegistration/classRegistration";
+if (window.location.href !== registrationPageUrl) {
+  throw new Error("This is not the registration page.");
+}
 
 // Navigates to the plans tab
 const navigateToPlansTab = () => {
@@ -93,23 +89,21 @@ const waitForCoursesToAdd = () => {
   });
 };
 
-const snipe = async (targetPlan: string) => {
-  // const continueBtn = document.getElementById("term-go");
-  // continueBtn.click();
+const selectPlanAndSubmit = async (targetPlan: string) => {
+  console.log("Triggered");
+  removeNotifs();
+  navigateToPlansTab();
 
-  window.addEventListener("load", async () => {
-    removeNotifs();
-    navigateToPlansTab();
+  await waitForPlansToLoad();
+  const desiredPlanAccordion = getDesiredPlan(targetPlan);
+  addAllFromDesiredPlan(desiredPlanAccordion);
 
-    await waitForPlansToLoad();
-    const desiredPlanAccordion = getDesiredPlan(targetPlan);
-    addAllFromDesiredPlan(desiredPlanAccordion);
-
-    await waitForCoursesToAdd();
-    const submitBtn = document.getElementById("saveButton");
-    if (!submitBtn) {
-      throw Error("Could not find submit button");
-    }
-    submitBtn.click();
-  });
+  await waitForCoursesToAdd();
+  const submitBtn = document.getElementById("saveButton");
+  if (!submitBtn) {
+    throw Error("Could not find submit button");
+  }
+  submitBtn.click();
 };
+
+selectPlanAndSubmit("asdf");
