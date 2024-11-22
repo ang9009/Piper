@@ -4,18 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
-    <h1>Piper</h1>
-    <form action="">
-      <p>Registration time</p>
-      <input type="time" />
-      <p>Term</p>
-      <!-- This should probably be a different input type -->
-      <input type="text" />
-      <p>Plan name</p>
-      <input type="text" />
-      <button type="submit">Snipe</button>
+    <form action="" id="setup-form">
+      <div class="input-container">
+        <label for="reg-time">Registration time</label>
+        <input name="reg-time" type="time" />
+      </div>
+      <div class="input-container">
+        <label for="term">Term</label>
+        <input name="term" type="text" />
+      </div>
+      <div class="input-container">
+        <label for="plan-name">Plan name</label>
+        <input name="plan-name" type="text" />
+      </div>
+      <button id="submit-btn" type="submit">Snipe</button>
     </form>
+    <footer>
+      <img src="../icon.png" alt="" id="logo" />
+      <span id="credit">by dalfie</span>
+    </footer>
   </body>
 </html>

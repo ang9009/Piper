@@ -1,20 +1,20 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const removeNotifs_1 = require("./removeNotifs");
 console.log("Register script loaded");
+// TODO: this is probably not the best way to figure out which script to use?
 const registrationPageUrl = "https://nubanner.neu.edu/StudentRegistrationSsb/ssb/classRegistration/classRegistration";
 if (window.location.href !== registrationPageUrl) {
     throw new Error("This is not the registration page.");
 }
+const removeNotifs = () => {
+    const notifOkBtns = document.getElementsByClassName("notification-flyout-item primary");
+    if (notifOkBtns.length !== 0) {
+        for (const btn of notifOkBtns) {
+            if (btn instanceof HTMLElement) {
+                btn.click();
+            }
+        }
+    }
+};
 // Navigates to the plans tab
 const navigateToPlansTab = () => {
     const plansTab = document.getElementById("loadPlans-tab");
@@ -89,18 +89,19 @@ const waitForCoursesToAdd = () => {
         observer.observe(summaryBody, config);
     });
 };
-const selectPlanAndSubmit = (targetPlan) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("Triggered");
-    (0, removeNotifs_1.removeNotifs)();
+// Scripts are injected after the DOM is completed, so no event listeners are
+// needed here
+const selectPlanAndSubmit = async (targetPlan) => {
+    removeNotifs();
     navigateToPlansTab();
-    yield waitForPlansToLoad();
+    await waitForPlansToLoad();
     const desiredPlanAccordion = getDesiredPlan(targetPlan);
     addAllFromDesiredPlan(desiredPlanAccordion);
-    yield waitForCoursesToAdd();
+    await waitForCoursesToAdd();
     const submitBtn = document.getElementById("saveButton");
     if (!submitBtn) {
         throw Error("Could not find submit button");
     }
     submitBtn.click();
-});
+};
 selectPlanAndSubmit("asdf");

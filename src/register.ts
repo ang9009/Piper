@@ -1,12 +1,24 @@
-import { removeNotifs } from "./removeNotifs";
-
 console.log("Register script loaded");
 
+// TODO: this is probably not the best way to figure out which script to use?
 const registrationPageUrl =
   "https://nubanner.neu.edu/StudentRegistrationSsb/ssb/classRegistration/classRegistration";
 if (window.location.href !== registrationPageUrl) {
   throw new Error("This is not the registration page.");
 }
+
+const removeNotifs = () => {
+  const notifOkBtns = document.getElementsByClassName(
+    "notification-flyout-item primary"
+  );
+  if (notifOkBtns.length !== 0) {
+    for (const btn of notifOkBtns) {
+      if (btn instanceof HTMLElement) {
+        btn.click();
+      }
+    }
+  }
+};
 
 // Navigates to the plans tab
 const navigateToPlansTab = () => {
@@ -89,8 +101,9 @@ const waitForCoursesToAdd = () => {
   });
 };
 
+// Scripts are injected after the DOM is completed, so no event listeners are
+// needed here
 const selectPlanAndSubmit = async (targetPlan: string) => {
-  console.log("Triggered");
   removeNotifs();
   navigateToPlansTab();
 
